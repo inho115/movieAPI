@@ -10,11 +10,8 @@
  ********************************************************************************/
 
 const express = require("express");
-const app = express();
-const path = require("path");
-const bodyParser = require("body-parser");
 const cors = require("cors");
-const exp = require("constants");
+const app = express();
 require("dotenv").config();
 const HTTP_PORT = process.env.PORT || 8080;
 
@@ -23,6 +20,16 @@ const db = new MoviesDB();
 
 app.use(cors());
 app.use(express.json());
+
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "OPTIONS, GET, POST, PUT, PATCH, DELETE"
+  );
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  next();
+});
 
 app.get("/", (req, res) => {
   res.status(200).json({ message: `API Listening.` });
