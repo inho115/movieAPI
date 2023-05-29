@@ -48,7 +48,8 @@ app.post("/api/movies", (req, res) => {
 app.get("/api/movies", (req, res) => {
   const page = req.query.page;
   const perPage = req.query.perPage;
-  db.getAllMovies(page, perPage)
+  const title = req.query.title;
+  db.getAllMovies(page, perPage, title)
     .then((movies) => {
       if (movies.length > 0) {
         res.status(200).json({ movies: movies });
